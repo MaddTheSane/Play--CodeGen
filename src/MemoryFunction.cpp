@@ -42,7 +42,7 @@ CMemoryFunction::CMemoryFunction(const void* code, size_t size)
 #elif defined(__APPLE__)
 	vm_size_t page_size = 0;
 	host_page_size(mach_task_self(), &page_size);
-	unsigned int allocSize = ((size + page_size - 1) / page_size) * page_size;
+	vm_size_t allocSize = ((size + page_size - 1) / page_size) * page_size;
 	vm_allocate(mach_task_self(), reinterpret_cast<vm_address_t*>(&m_code), allocSize, TRUE); 
 	memcpy(m_code, code, size);
 	sys_icache_invalidate(m_code, size);
